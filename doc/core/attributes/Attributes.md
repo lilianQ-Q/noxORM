@@ -16,14 +16,23 @@ Nous avons une classe qui s'appelle Biloute, mais dans la base de données la ta
 - ColumnName.cs : Cette classe permet de créer un attribut personnalisé sur un champ d'une autre classe qui définit un nom de colonne dans la base de donnée.
     ##### ColumnName exemple
 ```
-
+    public class Biloute
+    {
+        [ColumnName("Nordique")]
+        public string nordique;
+    }
 ```
 
 #### ColumnType
 - ColumnType.cs : Cette classe permet de créer un attribut personnalisé sur un champ d'une autre classe, ell définit un type de donnée dans la base de données. On va déclarer de quel type il s'agit, la taille de la valeure et si celle-ci peut être nulle.
     #### ColumnType Exemple
 ```
-
+    public class Biloute
+    {
+        [ColumnName("Nom")]
+        [ColumnType(DbType.String, 255, true, "Représente un nom non null de 255 charactères maximum.")]
+        public string nom;
+    }
 ```
 
 #### ForeignKey
@@ -48,9 +57,13 @@ public class Test
     } 
 ```
 
-#### TabmeName
+#### TableName
 - TableName : Cette classe permet de créer un attribut personnalisé sur un champ d'une autre classe, elle définit un nom de table. (Comme vu dans l'exemple plus haut...)
     ##### TableName Exemple
 ```
-
+    [TableName("Bilouteeeee")]
+    public class Biloute
+    {
+        public string nordique;
+    }
 ```
