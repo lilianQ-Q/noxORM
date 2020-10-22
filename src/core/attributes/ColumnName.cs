@@ -25,7 +25,7 @@ namespace noxORM.src.core.attributes
         /// </summary>
         public ColumnName()
         {
-            this.columnName = "testarea";
+            this.columnName = "noname";
         }
 
         /// <summary>

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -15,14 +16,14 @@ namespace noxORM.src.core.attributes
     {
         #region Fields
 
-        private DbType databaseType { get; set; }
-        private int length { get; set; }
-        private bool nullable { get; set; }
-        private string comment { get; set; }
+        public DbType databaseType { get; private set; }
+        public int length { get; private set; }
+        public bool nullable { get; private set; }
+        public string comment { get; private set; }
 
         #endregion
 
-        #region Constructor
+        #region Constructors
 
         /// <summary>
         /// Default constructor of the ColumnType class. Use it for test purposes.
@@ -32,9 +33,9 @@ namespace noxORM.src.core.attributes
             this.databaseType = DbType.String;
             this.length = 255;
             this.nullable = true;
-            this.comment = "String test column type.";
+            this.comment = "noxORM test. error ?";
         }
-        
+
         /// <summary>
         /// Main constructor of the ColumnType class. It allows you to create a new ColumnType attribute.
         /// </summary>
