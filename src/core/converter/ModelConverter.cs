@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Reflection;
 
 namespace noxORM.src.core.converter
 {
@@ -19,12 +20,33 @@ namespace noxORM.src.core.converter
 
         #endregion
 
+        #region Singleton 
+
+        private static ModelConverter _instance;
+
+        /// <summary>
+        /// Singleton of ModelConverter class.
+        /// </summary>
+        public static ModelConverter Instance
+        {
+            get
+            {
+                if(_instance == null)
+                {
+                    _instance = new ModelConverter();
+                }
+                return (_instance);
+            }
+        }
+
+        #endregion
+
         #region Constructor
 
         /// <summary>
         /// Default constructor of ModelConverter.
         /// </summary>
-        public ModelConverter()
+        private ModelConverter()
         {
 
         }
@@ -40,7 +62,7 @@ namespace noxORM.src.core.converter
         /// <returns></returns>
         public Model ConvertToModel<T>()
         {
-            return (this.convertToModel(typeof(T)));
+            return (this.ConvertToModel(typeof(T)));
         }
 
         /// <summary>
@@ -51,7 +73,7 @@ namespace noxORM.src.core.converter
         public Model ConvertToModel(Type type)
         {
             string tableName = "";
-            Dictionary<string, ColumnField> allColumns = null;
+            Dictionary<string, ColumnField> allColumns = this.GetAllColumn(type);
             return (new Model(tableName, allColumns));
         }
 
@@ -77,7 +99,49 @@ namespace noxORM.src.core.converter
             return ((TableName)Attribute.GetCustomAttribute(classType, typeof(TableName)));
         }
 
+        /// <summary>
+        /// Method that allow the user to get for each field in a class his Column equivalent. 
+        /// </summary>
+        /// <param name="type">Represent the type of the class you want to use </param>
+        /// <returns></returns>
+        private Dictionary<string, ColumnField> GetAllColumn(Type type)
+        {
+            PropertyInfo[] properties = type.GetProperties();
+            Dictionary<string, ColumnField> result = new Dictionary<string, ColumnField>();
+            foreach(PropertyInfo property in properties)
+            {
+                result.Add(property.Name, this.GetColumnByProperty(property));
 
+            }
+            return result;
+        }
+
+        /// <summary>
+        /// Method that allow the user to get for a property his Column equivalent.
+        /// </summary>
+        /// <param name="property"></param>
+        /// <returns></returns>
+        private ColumnField GetColumnByProperty(PropertyInfo property)
+        {
+            object[] attributes = property.GetCustomAttributes(true);
+            ColumnField newColumnField = new ColumnField();
+            ColumnName columnName = new ColumnName();
+            ColumnType columnType = new ColumnType();
+            foreach(object attribute in attributes)
+            {
+                if (attribute.GetType().Equals(typeof(ColumnName))){
+                    columnName = attribute as ColumnName;
+                }
+                if (attribute.GetType().Equals(typeof(ColumnType)))
+                {
+                    columnType = attribute as ColumnType;
+                }
+                //todo clé primaire ?? clé étrangère ??
+            }
+            newColumnField.SetColumnName(columnName, property);
+            newColumnField.SetColumnType(columnType, property);
+            return (newColumnField);
+        }
 
         #endregion
     }
