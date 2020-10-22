@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace noxORM.src.core.definitions
 {
-    class Model
+    public class Model
     {
         #region Fields
 

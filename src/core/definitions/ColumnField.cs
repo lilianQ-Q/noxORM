@@ -10,7 +10,7 @@ namespace noxORM.src.core.definitions
     /// <summary>
     /// This class combines column & field.
     /// </summary>
-    class ColumnField
+    public class ColumnField
     {
         #region Fields
 
