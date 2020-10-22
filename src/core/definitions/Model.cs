@@ -11,7 +11,7 @@ namespace noxORM.src.core.definitions
         #region Fields
 
         public string tableName { get; set; }
-        public Dictionary<string, ColumnField> columnProperties { get; private set; }
+        public Dictionary<string, ColumnField> columnsProperties { get; private set; }
 
         #endregion
 
@@ -25,7 +25,7 @@ namespace noxORM.src.core.definitions
         public Model(string tableName, Dictionary<string, ColumnField> columnProperties)
         {
             this.tableName = tableName;
-            this.columnProperties = columnProperties;
+            this.columnsProperties = columnProperties;
         }
 
         #endregion
