@@ -4,6 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Data;
+using noxORM.src.core.attributes;
+using System.Reflection;
 
 namespace noxORM.src.core.definitions
 {
@@ -21,19 +23,19 @@ namespace noxORM.src.core.definitions
         /// <summary>
         /// Database column name
         /// </summary>
-        public string columnName { get; set; }
+        public string columnName { get; private set; }
         /// <summary>
         /// Database column type
         /// </summary>
-        public DbType columnType { get; set; }
+        public DbType columnType { get; private set; }
         /// <summary>
         /// Database column value length
         /// </summary>
-        public string length { get; set; }
+        public int length { get; private set; }
         /// <summary>
         /// Is this column nullable ?
         /// </summary>
-        public bool nullable { get; set; }
+        public bool nullable { get; private set; }
         /// <summary>
         /// Comment of the column
         /// </summary>
@@ -41,10 +43,64 @@ namespace noxORM.src.core.definitions
 
         //todo A TESTER
 
-        public string isPrimary { get; set; }
-        public string isForeign { get; set; }
+        public bool isPrimary { get; set; }
+        public bool isForeign { get; set; }
         public string foreignPropertieName { get; set; }
         public string foreignTableName { get; set; }
+
+        #endregion
+
+        #region Constructor
+
+        /// <summary>
+        /// Default constructor of the ColumnField class
+        /// </summary>
+        public ColumnField()
+        {
+            this.propertieName = "none";
+            this.columnName = "none";
+            this.columnType = DbType.String;
+            this.length = 255;
+            this.nullable = true;
+            this.comment = "An error has occured";
+        }
+
+        #endregion
+
+        #region Methods
+
+        /// <summary>
+        /// Method that allow the user to set the name of the column.
+        /// </summary>
+        /// <param name="columnName">Custom attribute that represent the column's name</param>
+        /// <param name="property">Name of the original class property</param>
+        public void SetColumnName(ColumnName columnName, PropertyInfo property)
+        {
+            this.columnName = columnName.columnName == "noname" ? property.Name : columnName.columnName;
+            this.propertieName = property.Name;
+        }
+
+        /// <summary>
+        /// Method that allow the user to set column's type properties. (type, length, nullable, comment)
+        /// </summary>
+        /// <param name="columnType">Represent the type of the column</param>
+        /// <param name="property">Name of the original class property</param>
+        public void SetColumnType(ColumnType columnType, PropertyInfo property)
+        {
+
+            if(columnType != null)
+            {
+                this.columnType = columnType.databaseType;
+                this.length = columnType.length;
+                this.nullable = columnType.nullable;
+                this.comment = columnType.comment;
+            }
+            else
+            {
+                //todo
+                throw new NotImplementedException("Pas encore dev lol, doit chercher le type de la base de données qui correspond au type de l'attribut");
+            }
+        }
 
         #endregion
     }
