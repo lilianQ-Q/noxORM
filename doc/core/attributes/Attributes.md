@@ -32,7 +32,7 @@ Nous avons une classe qui s'appelle Biloute, mais dans la base de données la ta
     public class Biloute
     {
         [ColumnName("Nom")]
-        [ColumnType(DbType.String, 255, true, "Représente un nom non null de 255 charactères maximum.")]
+        [ColumnType(DbType.String, 255, false, "Représente un nom qui ne peut pas être null de 255 charactères maximum.")]
         public string nom;
     }
 ```
