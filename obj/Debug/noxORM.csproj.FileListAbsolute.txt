@@ -1,6 +1,0 @@
-C:\Users\ldamiens\source\repos\rushOrm\noxORM\bin\Debug\noxORM.dll
-C:\Users\ldamiens\source\repos\rushOrm\noxORM\bin\Debug\noxORM.pdb
-C:\Users\ldamiens\source\repos\rushOrm\noxORM\obj\Debug\noxORM.csprojAssemblyReference.cache
-C:\Users\ldamiens\source\repos\rushOrm\noxORM\obj\Debug\noxORM.csproj.CoreCompileInputs.cache
-C:\Users\ldamiens\source\repos\rushOrm\noxORM\obj\Debug\noxORM.dll
-C:\Users\ldamiens\source\repos\rushOrm\noxORM\obj\Debug\noxORM.pdb
