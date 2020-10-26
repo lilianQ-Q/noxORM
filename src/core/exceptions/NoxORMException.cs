@@ -7,6 +7,9 @@ using System.Threading.Tasks;
 
 namespace noxORM.src.core.exceptions
 {
+    /// <summary>
+    /// NoxORM custom Exception
+    /// </summary>
     [Serializable]
     public class NoxORMException : Exception, ISerializable
     {
