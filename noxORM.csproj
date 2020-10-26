@@ -46,12 +46,34 @@
     <Compile Include="src\core\attributes\ColumnName.cs" />
     <Compile Include="src\core\attributes\ColumnType.cs" />
     <Compile Include="src\core\attributes\ForeignKey.cs" />
+    <Compile Include="src\core\attributes\NotGenerateColumn.cs" />
     <Compile Include="src\core\attributes\PrimaryKey.cs" />
     <Compile Include="src\core\attributes\TableName.cs" />
+    <Compile Include="src\core\builder\Generator.cs" />
+    <Compile Include="src\core\builder\interfaces\IGenerator.cs" />
+    <Compile Include="src\core\converter\EntitieConverter.cs" />
+    <Compile Include="src\core\converter\ModelConverter.cs" />
+    <Compile Include="src\core\definitions\ColumnField.cs" />
+    <Compile Include="src\core\definitions\FactoryModel.cs" />
+    <Compile Include="src\core\definitions\Model.cs" />
+    <Compile Include="src\core\exceptions\ConverterErrorExceptions.cs" />
+    <Compile Include="src\core\exceptions\DatabaseTypeErrorException.cs" />
+    <Compile Include="src\core\exceptions\NoxORMException.cs" />
+    <Compile Include="src\core\typemapper\SqlData.cs" />
   </ItemGroup>
-  <ItemGroup />
   <ItemGroup>
     <None Include="doc\core\attributes\Attributes.md" />
+    <None Include="doc\core\exceptions\DatabaseTypeError\DatabaseTypeError.md" />
+    <None Include="doc\core\exceptions\DatabaseTypeError\DBT1.md" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="doc\core\converter\" />
+    <Folder Include="doc\core\definitions\" />
+    <Folder Include="src\core\builder\jspencore\" />
+    <Folder Include="src\module\httpLogger\src\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="README.md" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
