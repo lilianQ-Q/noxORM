@@ -6,6 +6,8 @@ using System.Threading.Tasks;
 using System.Data;
 using noxORM.src.core.attributes;
 using System.Reflection;
+using noxORM.src.core.converter;
+using noxORM.src.core.mapper;
 
 namespace noxORM.src.core.definitions
 {
@@ -88,7 +90,7 @@ namespace noxORM.src.core.definitions
         public void SetColumnType(ColumnType columnType, PropertyInfo property)
         {
 
-            if(columnType != null)
+            if(!columnType.isDefaultObject)
             {
                 this.columnType = columnType.databaseType;
                 this.length = columnType.length;
@@ -97,8 +99,7 @@ namespace noxORM.src.core.definitions
             }
             else
             {
-                //todo
-                throw new NotImplementedException("Pas encore dev lol, doit chercher le type de la base de données qui correspond au type de l'attribut");
+                this.columnType = SqlData.Instance.GetDbTypeByType(property.PropertyType, property.Name);
             }
         }
 
