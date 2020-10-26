@@ -31,6 +31,22 @@ namespace noxORM.src.core.builder
 
         public string Insert(Model model)
         {
+            StringBuilder query = new StringBuilder();
+            query.Append("INSERT INTO " + model.tableName + " ( ");
+            int countProperties = model.columnsProperties.Count();
+            int i = 1;
+            foreach(ColumnField field in model.columnsProperties.Values)
+            {
+                query.Append(field.columnName);
+                if (i < countProperties)
+                {
+                    query.Append(", ");
+                }
+                i++;
+            }
+            query.Append(" ) VALUES ( {0} );");
+            return (query.ToString());
+
             throw new NotImplementedException();
         }
 
@@ -39,11 +55,46 @@ namespace noxORM.src.core.builder
             StringBuilder query = new StringBuilder();
             query.Append(" SELECT ");
 
-            int count = 1;
+            int countProperties = model.columnsProperties.Count();
+            int i = 1;
             foreach(ColumnField field in model.columnsProperties.Values)
             {
-                query.Append(field.columnName + ", ");
+                query.Append(field.columnName);
+                if( i < countProperties)
+                {
+                    query.Append(", ");
+                }
+                i++;
             }
+            query.Append(" FROM " + model.tableName + ";");
+            return (query.ToString());
+        }
+
+        public string Update(Model model)
+        {
+            StringBuilder query = new StringBuilder();
+            query.Append("UPDATE " + model.tableName + " SET ");
+
+            int countProperties = model.columnsProperties.Count();
+            int i = 0;
+
+            foreach(ColumnField field in model.columnsProperties.Values)
+            {
+                query.Append(field.columnName + " = '{" + i + "}'");
+                if(i < countProperties - 1)
+                {
+                    query.Append(", ");
+                }
+                i++;
+            }
+            query.Append(" WHERE {" + i + "}");
+            return (query.ToString());
+        }
+
+        public string Delete(Model model)
+        {
+            StringBuilder query = new StringBuilder();
+            query.Append("DELETE FROM " + model.tableName + "WHERE {0};");
             return (query.ToString());
         }
     }

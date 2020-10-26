@@ -11,5 +11,7 @@ namespace noxORM.src.core.builder.interfaces
     {
         string Select(Model model);
         string Insert(Model model);
+        string Update(Model model);
+        string Delete(Model model);
     }
 }
