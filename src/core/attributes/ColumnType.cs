@@ -20,6 +20,7 @@ namespace noxORM.src.core.attributes
         public int length { get; private set; }
         public bool nullable { get; private set; }
         public string comment { get; private set; }
+        public bool isDefaultObject { get; private set; }
 
         #endregion
 
@@ -33,7 +34,8 @@ namespace noxORM.src.core.attributes
             this.databaseType = DbType.String;
             this.length = 255;
             this.nullable = true;
-            this.comment = "noxORM test. error ?";
+            this.comment = "default";
+            this.isDefaultObject = true;
         }
 
         /// <summary>
@@ -49,6 +51,7 @@ namespace noxORM.src.core.attributes
             this.length = length;
             this.nullable = nullable;
             this.comment = comment;
+            this.isDefaultObject = false;
         }
 
         #endregion
