@@ -16,8 +16,6 @@ namespace noxORM.src.core.converter
     {
         #region Fields
 
-
-
         #endregion
 
         #region Singleton 
@@ -48,7 +46,7 @@ namespace noxORM.src.core.converter
         /// </summary>
         private ModelConverter()
         {
-
+            //parse le json vers le dictionnaire. 
         }
 
         #endregion
@@ -72,7 +70,8 @@ namespace noxORM.src.core.converter
         /// <returns></returns>
         public Model ConvertToModel(Type type)
         {
-            string tableName = "";
+            //todo | checker s'il a un custom attributes pour le nom de la table
+            string tableName = type.Name;
             Dictionary<string, ColumnField> allColumns = this.GetAllColumn(type);
             return (new Model(tableName, allColumns));
         }
@@ -110,8 +109,27 @@ namespace noxORM.src.core.converter
             Dictionary<string, ColumnField> result = new Dictionary<string, ColumnField>();
             foreach(PropertyInfo property in properties)
             {
-                result.Add(property.Name, this.GetColumnByProperty(property));
-
+                object[] attributes = property.GetCustomAttributes(true);
+                if (attributes.Length == 0)
+                {
+                    result.Add(property.Name, this.GetColumnByProperty(property));
+                }
+                if(attributes.Length > 0)
+                {
+                    // Searching if this column is in the database or if it is only a program property.
+                    bool foundNotGenerateColumn = false;
+                    foreach(object attribute in attributes)
+                    {
+                        if (attribute.GetType().Equals(typeof(NotGenerateColumn)))
+                        {
+                            foundNotGenerateColumn = true;
+                        }
+                    }
+                    if (!foundNotGenerateColumn)
+                    {
+                        result.Add(property.Name, this.GetColumnByProperty(property));
+                    }
+                }
             }
             return result;
         }
@@ -136,6 +154,7 @@ namespace noxORM.src.core.converter
                 {
                     columnType = attribute as ColumnType;
                 }
+
                 //todo clé primaire ?? clé étrangère ??
             }
             newColumnField.SetColumnName(columnName, property);
